@@ -12,17 +12,17 @@ A simple grocery app built with React and Node.js.
 ```bash
 git clone https://github.com/username/my-grocery-app.git
 cd my-grocery-app
-
+```
 2. Install dependencies:
 ```bash
 npm install
-
+```
 3. Start the server:
 ```bash
 npm start
-
+```
 4. Start the frontend
 ```bash
 npm run dev
-
-**## Screenshots**
+```
+## Screenshots
