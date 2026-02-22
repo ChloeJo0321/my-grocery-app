@@ -9,7 +9,6 @@ A simple shopping cart project built with React and Node.js.
 
 ## 🚀 How to Run
 1. Clone the repository:
-```bash
 git clone https://github.com/username/my-grocery-app.git
 cd my-grocery-app
 
