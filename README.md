@@ -8,6 +8,7 @@ A simple shopping cart project built with React and Node.js.
 - MySQL
 
 ## 🚀 How to Run
+```bash
 1. Clone the repository:
 git clone https://github.com/username/my-grocery-app.git
 cd my-grocery-app
@@ -15,9 +16,9 @@ cd my-grocery-app
 2. Install dependencies:
 npm install
 
-3. Start the server:
+4. Start the server:
 npm start
 
-4. Start the frontend
+5. Start the frontend
 npm run dev
 
