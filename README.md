@@ -25,4 +25,5 @@ npm start
 ```bash
 npm run dev
 ```
-## Screenshots
+## 📸 Screenshots
+<img width="3811" height="1714" alt="my-grocery-app-main" src="https://github.com/user-attachments/assets/867c7549-bc57-4c33-824a-cd2ef61363fb" />
