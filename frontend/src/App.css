@@ -243,6 +243,7 @@ body {
   padding: 10px;
   gap: 10px;
 }
+
 .cart-container {
   display: flex;
   flex-direction: column;
@@ -267,7 +268,9 @@ body {
   padding: 10px;
   border: none;
   border-radius: 20px;
+  cursor: pointer;
 }
+
 
 .buy-btn {
   color: white;

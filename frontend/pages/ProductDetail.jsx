@@ -7,15 +7,17 @@ function ProductDetail() {
   const [product, setProduct] = useState(null);
   const [isProduct, setIsProduct] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [isData, setIsData] = useState(null);
+  let buttonText = "Add to Cart";
+  // const [productData, setProductData] = useState([]);
 
-  // To fetch single product data
+  // To fetch and display single product data
   useEffect(() => {
     fetch(`http://localhost:3000/api/freshProduce/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);
         setIsProduct(true);
-        console.log("Product data successfully received");
       });
   }, [id]);
 
@@ -24,34 +26,49 @@ function ProductDetail() {
   }
 
   // Add product to cart db
-  // To-do: check if user log in
   const addToCart = async () => {
+    // Check if product already exists in user's cart?
     try {
-      const response = await fetch("http://localhost:3000/api/cart", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          productId: id,
-          quantity: quantity,
-          productName: product[0]["product_name"],
-          productPrice: product[0]["product_price"],
-          productPic: product[0]["product_pic"],
-        }),
-      });
-
-      if (response) {
-        console.log(quantity);
-      }
-    } catch (error) {
-      console.log(error);
+      await fetch(`http://localhost:3000/api/cart/check?productId=${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.length > 0) {
+            setIsData(true);
+          } else {
+            setIsData(false);
+          }
+        });
+    } catch (err) {
+      console.log(err);
     }
   };
+
+  if (isData === false) {
+    fetch("http://localhost:3000/api/cart", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        productId: id,
+        quantity: quantity,
+        productName: product[0]["product_name"],
+        productPrice: product[0]["product_price"],
+        productPic: product[0]["product_pic"],
+      }),
+    });
+  }
+
+  console.log(isData);
+  // Change "Add to Cart" button text
+  if (isData === true) {
+    buttonText = "Already in Cart";
+  } else if (isData === false) {
+    buttonText = "Added to Cart";
+  }
 
   function ChangeQuantity() {
     const handleChange = (event) => {
       setQuantity(event.target.value);
     };
-
     return (
       <>
         <div className='quantity-container'>
@@ -67,7 +84,6 @@ function ProductDetail() {
       </>
     );
   }
-
   // Rendering data
   return (
     <>
@@ -87,7 +103,7 @@ function ProductDetail() {
           <ChangeQuantity />
           <div className='btn-container'>
             <button className='cart-btn' onClick={addToCart}>
-              Add to Cart
+              {buttonText}
             </button>
             <button className='buy-btn'>Buy Now</button>
           </div>
@@ -96,5 +112,4 @@ function ProductDetail() {
     </>
   );
 }
-
 export default ProductDetail;
