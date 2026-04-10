@@ -8,8 +8,10 @@ function ProductDetail() {
   const [isProduct, setIsProduct] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [isData, setIsData] = useState(null);
+  const [isUser, setIsUser] = useState(null);
+  const [justAdded, setJustAdded] = useState(null);
   let buttonText = "Add to Cart";
-  // const [productData, setProductData] = useState([]);
+  const username = "testUser";
 
   // To fetch and display single product data
   useEffect(() => {
@@ -27,13 +29,25 @@ function ProductDetail() {
 
   // Add product to cart db
   const addToCart = async () => {
-    // Check if product already exists in user's cart?
     try {
-      await fetch(`http://localhost:3000/api/cart/check?productId=${id}`)
+      // Check if user already has data in DB
+      await fetch(`http://localhost:3000/api/cart/user?username=${username}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.length === 0) {
+            setIsUser(false);
+          } else {
+            setIsUser(true);
+          }
+        });
+
+      // Check if product already in DB
+      await fetch(`http://localhost:3000/api/cart/product?productId=${id}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.length > 0) {
             setIsData(true);
+            setJustAdded(false);
           } else {
             setIsData(false);
           }
@@ -53,18 +67,20 @@ function ProductDetail() {
         productName: product[0]["product_name"],
         productPrice: product[0]["product_price"],
         productPic: product[0]["product_pic"],
+        username: username,
       }),
     });
+    setIsData(true);
+    setJustAdded(true);
   }
 
-  console.log(isData);
-  // Change "Add to Cart" button text
-  if (isData === true) {
+  if (justAdded === true) {
+    buttonText = "Added to Cart!";
+  } else if (justAdded === false) {
     buttonText = "Already in Cart";
-  } else if (isData === false) {
-    buttonText = "Added to Cart";
   }
 
+  // Function to change product quantity
   function ChangeQuantity() {
     const handleChange = (event) => {
       setQuantity(event.target.value);

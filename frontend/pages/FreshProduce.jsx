@@ -25,7 +25,6 @@ function FreshProduce() {
       .then((data) => {
         setProducts(data);
         setLoading(false);
-        console.log("Data received");
       })
       .catch((err) => {
         console.error("Error fetching data:", err);

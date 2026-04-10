@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function Cart() {
   // Fetch info from DB
   const [cart, setCart] = useState(null);
+  let [total, setTotal] = useState(0.0);
 
   // Fetch user's cart data
   useEffect(() => {
@@ -10,41 +11,64 @@ function Cart() {
       .then((res) => res.json())
       .then((data) => {
         setCart(data);
-        console.log(data);
+        data.map((item) => {
+          let itemTotal = item.product_price * item.product_quantity;
+          setTotal((total) => total + itemTotal);
+        });
       });
   }, []);
 
   if (cart === null) {
-    return <p>Cart is empty...</p>;
+    return <p>Your cart is empty...</p>;
   }
 
-  // Let user change the product quantity
+  // Update product quantity in frontend and backend
   const changeQuantity = async (id, qty) => {
-    setCart((prevCart) =>
-      prevCart.map((item) => {
-        return item.product_id === id
-          ? { ...item, product_quantity: qty }
-          : item;
-      }),
-    );
-
+    // Store previous cart in case there's discrepancy between frontend and backend
+    const prevCart = cart;
     try {
+      console.log(total);
+      setCart((prev) =>
+        prev.map((item) => {
+          let newQuantity = 0;
+          if (item.product_quantity > qty) {
+            newQuantity = item.product_quantity - qty;
+          } else {
+            newQuantity = qty - item.product_quantity;
+          }
+
+          // console.log(itemTotal);
+          setTotal(total + item.product_price * newQuantity);
+
+          return item.product_id === id
+            ? { ...item, product_quantity: qty }
+            : item;
+        }),
+      );
+
       await fetch("http://localhost:3000/api/cart", {
-        method: "POST",
+        method: "PATCH",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({
           product_id: id,
           product_quantity: qty,
+          username: "testUser",
         }),
       });
     } catch (error) {
+      setCart(prevCart);
       console.log(error);
     }
   };
 
+  // const checkOut;
+
   // Rendering
   return (
     <>
+      <div className='cart-header'>
+        <h1>Cart</h1>
+      </div>
       <div className='cart-outer-container '>
         <div className='cart-container'>
           {cart.map((item) => (
@@ -90,7 +114,7 @@ function Cart() {
           ))}
         </div>
         <div>
-          <p>Subtotal: $ </p>
+          <p>Subtotal: ${total.toFixed(2)}</p>
           <button>Proceed to Checkout</button>
         </div>
       </div>

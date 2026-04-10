@@ -3,41 +3,34 @@ const router = express.Router();
 const db = require("../config/db");
 
 router.post("/", async (req, res) => {
-  // Get added product info
-  const { productId, quantity, productName, productPrice, productPic } =
-    req.body;
-  const username = "testUser";
-  // Check if product in user's cart?
-  // No
-  const cartData = await db.query(
-    "INSERT INTO cart (product_id, product_quantity, product_name, username, product_price, product_pic) VALUES (?,?,?,?,?,?) ",
-    [productId, quantity, productName, username, productPrice, productPic],
-  );
-  // No: Insert info into cart
+  const {
+    productId,
+    quantity,
+    productName,
+    productPrice,
+    productPic,
+    username,
+  } = req.body;
 
-  // if (cartData.length === 0) {
-  //   // Add a new row
-  //   const query =
-  //     "INSERT INTO cart (product_id, product_quantity, product_name, username, product_price, product_pic) VALUES (?,?,?,?,?,?)";
-  //   await db.query(
-  //     query,
-  //     [productId, quantity, productName, username, productPrice, productPic],
-  //     (err, result) => {
-  //       if (err) {
-  //         console.error(err);
-  //         return res.status(500).json({ error: "DB insert failed" });
-  //       }
-  //       res.json({ success: true });
-  //     },
-  //   );
-  // } else {
-  //   // Yes
-  //   // Update quantity
-  //   console.log("Product already in cart");
-  // }
+  await db.query(
+    "INSERT INTO cart (product_id, product_quantity, product_name, product_price, product_pic, username) VALUES (?,?,?,?,?,?)",
+    [productId, quantity, productName, productPrice, productPic, username],
+  );
 });
 
-// Get all items in user's cart
+router.patch("/", async (req, res) => {
+  // Get added product info
+  const { product_id, product_quantity, username } = req.body;
+
+  const query = await db.query(
+    "UPDATE cart SET product_quantity= ? WHERE username = ? AND product_id = ?",
+    [product_quantity, username, product_id],
+  );
+
+  console.log(query);
+});
+
+// Get and display all items in user's cart
 router.get("/", async (req, res) => {
   const username = "testUser"; // hardcode -> change it later
   try {
@@ -51,7 +44,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/check", async (req, res) => {
+router.get("/product", async (req, res) => {
   const { productId } = req.query;
   const username = "testUser";
   const data = await db.query(
@@ -59,6 +52,14 @@ router.get("/check", async (req, res) => {
     [username, productId],
   );
   return res.json(data);
+});
+
+router.get("/user", async (req, res) => {
+  const { username } = req.query;
+  const userData = await db.query("SELECT * FROM cart WHERE username = ?", [
+    username,
+  ]);
+  return res.json(userData);
 });
 
 module.exports = router;

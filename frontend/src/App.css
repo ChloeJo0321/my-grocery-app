@@ -201,6 +201,11 @@ body {
   text-align: center;
 }
 
+.single-product-container a {
+  color: var(--text-dark);
+  text-decoration: none;
+}
+
 .product-image {
   width: 200px;
   height: 150px;
@@ -241,14 +246,17 @@ body {
 .cart-outer-container {
   display: flex;
   padding: 10px;
-  gap: 10px;
+}
+
+.cart-header {
+  padding: 20px;
 }
 
 .cart-container {
   display: flex;
   flex-direction: column;
   padding: 10px;
-  gap: 10px;
+  gap: 20px;
 }
 
 /* 
