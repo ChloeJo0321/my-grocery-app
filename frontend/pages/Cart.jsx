@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 function Cart() {
   // Fetch info from DB
   const [cart, setCart] = useState(null);
-  let [total, setTotal] = useState(0.0);
 
   // Fetch user's cart data
   useEffect(() => {
@@ -11,10 +10,6 @@ function Cart() {
       .then((res) => res.json())
       .then((data) => {
         setCart(data);
-        data.map((item) => {
-          let itemTotal = item.product_price * item.product_quantity;
-          setTotal((total) => total + itemTotal);
-        });
       });
   }, []);
 
@@ -27,19 +22,8 @@ function Cart() {
     // Store previous cart in case there's discrepancy between frontend and backend
     const prevCart = cart;
     try {
-      console.log(total);
       setCart((prev) =>
         prev.map((item) => {
-          let newQuantity = 0;
-          if (item.product_quantity > qty) {
-            newQuantity = item.product_quantity - qty;
-          } else {
-            newQuantity = qty - item.product_quantity;
-          }
-
-          // console.log(itemTotal);
-          setTotal(total + item.product_price * newQuantity);
-
           return item.product_id === id
             ? { ...item, product_quantity: qty }
             : item;
@@ -61,7 +45,12 @@ function Cart() {
     }
   };
 
-  // const checkOut;
+  const total = cart
+    ? cart.reduce(
+        (sum, item) => sum + item.product_price * item.product_quantity,
+        0,
+      )
+    : 0;
 
   // Rendering
   return (
