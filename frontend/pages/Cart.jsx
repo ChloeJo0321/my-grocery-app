@@ -45,6 +45,7 @@ function Cart() {
     }
   };
 
+  // Calculate the subtotal of items in cart
   const total = cart
     ? cart.reduce(
         (sum, item) => sum + item.product_price * item.product_quantity,
