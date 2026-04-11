@@ -34,6 +34,7 @@ npm run dev
   
 3. Cart
   1) Update product quantity
-  2) Delete products
+  2) Update the subtotal
+  3) Delete products
 <img width="3660" height="1761" alt="image" src="https://github.com/user-attachments/assets/50ea69db-25e2-4295-b96b-3cb117963b46" />
 
