@@ -27,7 +27,8 @@ router.patch("/", async (req, res) => {
     [product_quantity, username, product_id],
   );
 
-  console.log(query);
+  // Test for update query
+  // console.log(query);
 });
 
 // Get and display all items in user's cart

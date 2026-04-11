@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 function Cart() {
   // Fetch info from DB
@@ -22,6 +22,7 @@ function Cart() {
     // Store previous cart in case there's discrepancy between frontend and backend
     const prevCart = cart;
     try {
+      // Update product quanty using setCart
       setCart((prev) =>
         prev.map((item) => {
           return item.product_id === id
@@ -30,6 +31,7 @@ function Cart() {
         }),
       );
 
+      // Update new quantity info in DB
       await fetch("http://localhost:3000/api/cart", {
         method: "PATCH",
         headers: { "Content-type": "application/json" },
