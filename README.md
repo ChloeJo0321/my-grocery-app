@@ -28,10 +28,10 @@ npm run dev
 ## 📸 Screenshots
 1. Main Page
 <img width="3813" height="2052" alt="my-grocery-app-main" src="https://github.com/user-attachments/assets/baa69c6a-ea81-49e3-b58c-cd4cffdd54d1" />
-
+  
 2. Product List
 <img width="3813" height="2052" alt="my-grocery-app-main" src="https://github.com/user-attachments/assets/801a9fec-a494-4f76-a46a-d65216925416" />
-
+  
 3. Cart
   1) Update product quantity
   2) Delete products
