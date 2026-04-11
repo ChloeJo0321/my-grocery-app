@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
 
+// Add a new product record to cart DB
 router.post("/", async (req, res) => {
   const {
     productId,
@@ -18,6 +19,7 @@ router.post("/", async (req, res) => {
   );
 });
 
+// Access and update an existing product record
 router.patch("/", async (req, res) => {
   // Get added product info
   const { productId, productQuantity, username } = req.body;
@@ -45,6 +47,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get all product records from DB matching the username and product id
 router.get("/product", async (req, res) => {
   const { productId } = req.query;
   const username = "testUser";
@@ -55,6 +58,7 @@ router.get("/product", async (req, res) => {
   return res.json(data);
 });
 
+// Get all product records from DB matching the username
 router.get("/user", async (req, res) => {
   const { username } = req.query;
   const userData = await db.query("SELECT * FROM cart WHERE username = ?", [
@@ -63,6 +67,7 @@ router.get("/user", async (req, res) => {
   return res.json(userData);
 });
 
+// Acess and delete a product record from cart DB
 router.delete("/", async (req, res) => {
   const { productId, username } = req.body;
   const query = await db.query(
