@@ -32,3 +32,8 @@ npm run dev
 - Product List
 <img width="3813" height="2052" alt="my-grocery-app-main" src="https://github.com/user-attachments/assets/801a9fec-a494-4f76-a46a-d65216925416" />
 
+- Cart
+  1) Update product quantity
+  2) Delete products
+<img width="3660" height="1761" alt="image" src="https://github.com/user-attachments/assets/50ea69db-25e2-4295-b96b-3cb117963b46" />
+
