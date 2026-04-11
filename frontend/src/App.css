@@ -310,3 +310,12 @@ body {
   gap: 50px;
   padding: 10px;
 }
+
+.deleteBtn {
+  color: white;
+  background-color: #2E7D32;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 15px;
+}

@@ -36,17 +36,42 @@ function Cart() {
         method: "PATCH",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({
-          product_id: id,
-          product_quantity: qty,
+          productId: id,
+          productQuantity: qty,
           username: "testUser",
         }),
       });
-    } catch (error) {
+    } catch (err) {
       setCart(prevCart);
-      console.log(error);
+      console.log(err);
     }
   };
 
+  // Delete a certain product when the user clicks 'Delete'
+  const deleteItem = async (id) => {
+    const prevCart = cart;
+    try {
+      // Update frontend first (= optimistic update)
+      setCart((prev) => {
+        return prev.filter((item) => item.product_id !== id);
+      });
+
+      // Update backend using http method 'DELETE'
+      fetch("http://localhost:3000/api/cart", {
+        method: "DELETE",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          productId: id,
+          username: "testUser",
+        }),
+      });
+    } catch (err) {
+      setCart(prevCart);
+      console.log(err);
+    }
+  };
+
+  console.log(cart);
   // Calculate the subtotal of items in cart
   const total = cart
     ? cart.reduce(
@@ -101,6 +126,12 @@ function Cart() {
                   </span>
                 </div>
                 <p>${item.product_price}</p>
+                <button
+                  onClick={() => deleteItem(item.product_id)}
+                  className='deleteBtn'
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}

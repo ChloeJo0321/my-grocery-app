@@ -20,15 +20,15 @@ router.post("/", async (req, res) => {
 
 router.patch("/", async (req, res) => {
   // Get added product info
-  const { product_id, product_quantity, username } = req.body;
-
+  const { productId, productQuantity, username } = req.body;
+  console.log(req.body);
   const query = await db.query(
     "UPDATE cart SET product_quantity= ? WHERE username = ? AND product_id = ?",
-    [product_quantity, username, product_id],
+    [productQuantity, username, productId],
   );
 
   // Test for update query
-  // console.log(query);
+  console.log(query);
 });
 
 // Get and display all items in user's cart
@@ -61,6 +61,16 @@ router.get("/user", async (req, res) => {
     username,
   ]);
   return res.json(userData);
+});
+
+router.delete("/", async (req, res) => {
+  const { productId, username } = req.body;
+  const query = await db.query(
+    "DELETE from cart WHERE product_id = ? and username = ?",
+    [productId, username],
+  );
+
+  console.log(query);
 });
 
 module.exports = router;
