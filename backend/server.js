@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const produceRouter = require("./routes/produceRoute");
 const cartRouter = require("./routes/cartRoute");
+const searchRouter = require("./routes/searchRoute");
 const cors = require("cors");
 // const { router: userRouter } = require("./routes/userRoute");
 // const cartRouter = require("./routes/cartRoute");
@@ -15,6 +16,7 @@ app.use(cors());
 // API routes
 app.use("/api/freshProduce", produceRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/search", searchRouter);
 
 //Start the server
 app.listen(port, () => {

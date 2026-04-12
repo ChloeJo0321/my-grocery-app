@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "../src/assets/logo.png";
+import Search from "./Search";
 
 function Header() {
   return (
@@ -15,12 +16,7 @@ function Header() {
           <a href='/'>Fresh Cart</a>
         </div>
         <div className='search-container'>
-          <input
-            type='text'
-            placeholder='Search fresh produce, dairy...'
-            className='search-bar'
-          />
-          <button className='search-btn'>🔍</button>
+          <Search />
         </div>
         <nav className='user-menu'>
           <Link to='/reorder'>Reorder</Link>
