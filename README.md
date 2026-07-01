@@ -53,4 +53,4 @@ npm run dev
 
 ## 👤 Author
 Chloe Jo<br>
-GitHub: https://github.com/ChloeJo0321
+GitHub: https://github.com/chloejo-dev
