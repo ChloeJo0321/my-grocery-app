@@ -1,15 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 
 function Search() {
   const [searchWord, setSearchWord] = useState("");
-
-  function search() {
-    fetch("http://localhost:3000/api/search", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ searchWord: searchWord }),
-    });
-  }
+  let navigate = useNavigate();
 
   return (
     <>
@@ -22,7 +16,13 @@ function Search() {
           setSearchWord(e.target.value);
         }}
       />
-      <button onClick={search} className='search-btn'>
+      <button
+        className='search-btn'
+        onClick={() => {
+          console.log(searchWord);
+          navigate(`/search?searchWord=${searchWord}`);
+        }}
+      >
         🔍
       </button>
     </>
