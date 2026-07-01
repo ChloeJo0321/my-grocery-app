@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import ProductDetail from "./ProductDetail";
 import { Link } from "react-router-dom";
 
 function sliceArray(arr, size) {
